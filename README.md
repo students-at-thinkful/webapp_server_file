@@ -56,7 +56,7 @@ import time
 import datetime
 ```
 
-#### Public Site HTML Page Production
+### Public Site HTML Page Production using Python & webapp2
 ```
 class renderHTML(webapp2.RequestHandler):
     def get(self):
@@ -284,4 +284,64 @@ class deleteData(webapp2.RequestHandler):
         item.delete()
         time.sleep(1)
         self.redirect('../../user')
+```
+
+#### Query and List data as JSON 
+```
+class listData(webapp2.RequestHandler):
+    def get(self):
+        page_address = self.request.uri
+        base = os.path.basename(page_address)
+        data_set = base.split('?')[1]
+        if data_set == 'one_db':
+            q = db.Query(One_db)
+        if data_set == 'two_db':
+            q = db.Query(Two_db)
+        if data_set == 'three_db':
+            q = db.Query(Three_db)
+        db_data = q.order('-addTime').fetch(100)
+        data = []
+        for f in db_data:
+            data.append(db.to_dict(f))
+        self.response.headers['Content-Type'] = 'application/json'
+        self.response.out.write(json.dumps(data))
+```
+
+#### URL Routes  ,  Server Class
+```
+app = webapp2.WSGIApplication([
+#--------- Front Page ----------#
+    ('/', renderHTML),
+
+#--------- Main Pages ----------#
+    ('/one/?', renderHTML),
+    ('/two/?', renderHTML),
+    ('/three/?', renderHTML),
+
+#--------- Sub Pages -----------#
+    ('/one/form/?', renderHTML),
+    ('/one/data/?', renderHTML),
+    ('/two/form/?', renderHTML),
+    ('/two/data/?', renderHTML),
+    ('/three/form/?', renderHTML),
+    ('/three/data/?', renderHTML),
+
+#--------- User Pages ----------#
+    ('/user/?', renderHTML),
+    ('/user/nu/?', renderHTML),
+    ('/user/xi/?', renderHTML),
+    ('/user/om/?', renderHTML),
+
+
+#------- Adding New Data -------#
+    ('/add_one_db/?', addOne_db),
+    ('/add_two_db/?', addTwo_db),
+    ('/add_three_db/?', addThree_db),
+
+#----- List & Delete Data ------#
+    ('/list_data/?', listData),
+    ('/delete_data/?', deleteData),
+    
+
+], debug=True)
 ```
