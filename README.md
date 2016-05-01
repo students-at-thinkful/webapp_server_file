@@ -238,4 +238,33 @@ class addTwo_db(webapp2.RequestHandler):
         self.redirect('/two')
 ```
 
+#### Database Three
+```
+class Three_db(db.Model):
+    addTime = db.DateTimeProperty(auto_now_add=True)
+    data_id = db.StringProperty()
+  #
+    data_a = db.StringProperty()
+    data_b = db.StringProperty()
+    data_c = db.StringProperty()
+```
+
+#### Adding New Data From URL '/add_three_db/?'
+```
+class addThree_db(webapp2.RequestHandler):
+    def post(self):
+        date_time = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        data_id = date_time
+        item = Three_db(key_name=data_id)
+        item.data_id = data_id
+      # - -
+        item.data_a = self.request.get('data_a')
+        item.data_b = self.request.get('data_b')
+        item.data_c = self.request.get('data_c')
+      #
+        item.put()
+        time.sleep(1)
+        self.redirect('/three')
+```
+
 
