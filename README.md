@@ -20,3 +20,16 @@ user_nav_html = '''
       <a href="../../user/om"><li id="user_omNav">Om&nbsp; <span class="picto">&#9862;</span></li></a>
 '''
 ```
+
+#### Front Page HTML Code
+```
+front_page_html = '''<style>
+
+</style>
+<div class="page_html">
+  <header class="hi">
+    <span class="color_b"> &#9673; Hi &nbsp; <span class="picto"> &#9992; &#9732; &#10024; &#9642; &#8901;</span></span>
+  </header>
+ 
+</div><!-- - /page_html - -->'''
+```
