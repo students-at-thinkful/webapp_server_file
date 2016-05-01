@@ -267,4 +267,21 @@ class addThree_db(webapp2.RequestHandler):
         self.redirect('/three')
 ```
 
-
+#### Deleteing Data
+```
+class deleteData(webapp2.RequestHandler):
+    def get(self):
+        page_address = self.request.uri
+        base = os.path.basename(page_address)
+        data_set = base.split('?')[1]
+        data_id = base.split('?')[2]
+        if data_set == 'one_db':
+            item = db.Query(One_db).filter('data_id =', data_id).get()
+        if data_set == 'two_db':
+            item = db.Query(Two_db).filter('data_id =', data_id).get()
+        if data_set == 'three_db':
+            item = db.Query(Three_db).filter('data_id =', data_id).get()
+        item.delete()
+        time.sleep(1)
+        self.redirect('../../user')
+```
