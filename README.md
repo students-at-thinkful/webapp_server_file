@@ -180,4 +180,62 @@ class renderHTML(webapp2.RequestHandler):
         self.response.out.write(template.render(path, objects))
 ```
 
+#### Database One
+```
+class One_db(db.Model):
+    addTime = db.DateTimeProperty(auto_now_add=True)
+    data_id = db.StringProperty()
+  #
+    data_a = db.StringProperty()
+    data_b = db.StringProperty()
+    data_c = db.StringProperty()
+```
+
+#### Adding New Data From URL '/add_one_db/?'
+```
+class addOne_db(webapp2.RequestHandler):
+    def post(self):
+        date_time = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        data_id = date_time
+        item = One_db(key_name=data_id)
+        item.data_id = data_id
+      # - -
+        item.data_a = self.request.get('data_a')
+        item.data_b = self.request.get('data_b')
+        item.data_c = self.request.get('data_c')
+      #
+        item.put()
+        time.sleep(1)
+        self.redirect('/one')
+```
+
+#### Database Two
+```
+class Two_db(db.Model):
+    addTime = db.DateTimeProperty(auto_now_add=True)
+    data_id = db.StringProperty()
+  #
+    data_a = db.StringProperty()
+    data_b = db.StringProperty()
+    data_c = db.StringProperty()
+```
+
+#### Adding New Data From URL '/add_two_db/?'
+```
+class addTwo_db(webapp2.RequestHandler):
+    def post(self):
+        date_time = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        data_id = date_time
+        item = Two_db(key_name=data_id)
+        item.data_id = data_id
+      # - -
+        item.data_a = self.request.get('data_a')
+        item.data_b = self.request.get('data_b')
+        item.data_c = self.request.get('data_c')
+      #
+        item.put()
+        time.sleep(1)
+        self.redirect('/two')
+```
+
 
